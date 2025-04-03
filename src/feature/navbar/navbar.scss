@@ -1,0 +1,36 @@
+.navbar-container {
+  padding: 0 1rem;
+  border-bottom: 1px solid #e3e3e3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10vh;
+  .left-container {
+    img {
+      width: 100px;
+    }
+  }
+  .right-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    .btn {
+      border: none;
+      padding: 10px 1rem;
+      border-radius: 30px;
+      background-color: transparent;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: bold;
+      text-decoration: none;
+      color: #0d0c22;
+    }
+    .active {
+      background-color: #0d0c22;
+      color: white;
+      &:hover {
+        background-color: #0d0c224e;
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+.api-loading-btn {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #0d0c22;
+  color: #fff;
+  border-radius: 100px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  .loader {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    border-left-color: transparent;
+    animation: loader infinite 0.5s linear;
+  }
+}
+.api-loading-btn:disabled {
+  background-color: #e3e3e3;
+  color: #000;
+}
+
+@keyframes loader {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: 360deg;
+  }
+}
