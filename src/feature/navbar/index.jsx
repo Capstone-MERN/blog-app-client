@@ -3,6 +3,7 @@ import "./navbar.scss";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { isUserLoggedInSelector } from "../auth/authselectors";
+import CreatePost from "../blog/CreatePost";
 
 export default function NavigationBar() {
   const isUserLoggedIn = useSelector(isUserLoggedInSelector);
@@ -15,7 +16,9 @@ export default function NavigationBar() {
           alt="logo"
         />
       </div>
-      {!isUserLoggedIn && (
+      {isUserLoggedIn ? (
+        <CreatePost />
+      ) : (
         <div className="right-container">
           <NavLink to={{ pathname: "/signup" }} className="btn signup-btn">
             Signup

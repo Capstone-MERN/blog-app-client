@@ -1,4 +1,5 @@
 import { ApiStatus } from "../../network/ApiStatus";
+import Endpoints from "../../network/endpoints";
 import {
   mutateLoginState,
   mutateSignupState,
@@ -8,7 +9,7 @@ import {
 export function signupMiddleware(signupFormData) {
   return async function (dispatch) {
     dispatch(mutateSignupState({ apiStatus: ApiStatus.pending }));
-    const response = await fetch("http://localhost:8080/auth/signup", {
+    const response = await fetch(Endpoints.signup, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +31,7 @@ export function signupMiddleware(signupFormData) {
 export function loginMiddleware(signupFormData) {
   return async function (dispatch) {
     dispatch(mutateLoginState({ apiStatus: ApiStatus.pending }));
-    const response = await fetch("http://localhost:8080/auth/login", {
+    const response = await fetch(Endpoints.login, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

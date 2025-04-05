@@ -11,7 +11,7 @@ const PrivateRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index Component={Home} />
+        <Route path="/:genreId" Component={Home} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
@@ -20,7 +20,6 @@ const PrivateRoutes = () => {
 
 export default function App() {
   const isLoggedIn = useSelector(isUserLoggedInSelector);
-  console.log({ isLoggedIn });
 
   if (isLoggedIn) {
     return <PrivateRoutes />;

@@ -1,0 +1,18 @@
+.genres-container {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 2rem 1rem;
+  align-items: center;
+  color: gray;
+  .link {
+    font-size: 1.2rem;
+    font-weight: 500;
+    background-color: transparent;
+    border: none;
+    color: gray;
+    text-decoration: none;
+  }
+  .active-genre {
+    color: #000;
+  }
+}
