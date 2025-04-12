@@ -1,0 +1,41 @@
+.post-comments-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .comment-card {
+    border-bottom: 0.2px solid #e3e3e3;
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      .author {
+        font-weight: 600;
+      }
+      .created-timestamp {
+        color: gray;
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+.add-comment-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  .add-icon {
+    cursor: pointer;
+    transition: 0.4s;
+    &:hover {
+      scale: 1.2;
+    }
+  }
+  input {
+    flex-grow: 1;
+    padding: 10px;
+    border: none;
+    &:focus {
+      outline: none;
+    }
+  }
+}

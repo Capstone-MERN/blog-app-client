@@ -1,0 +1,19 @@
+.modal-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 1rem;
+  padding-bottom: 2rem;
+  z-index: 100;
+  width: min(80vw, 500px);
+  background-color: #fff;
+  box-shadow: 2px 2px 20px #e3e3e3;
+  .popup-header {
+    padding: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+    .close-btn {
+      cursor: pointer;
+    }
+  }
+}

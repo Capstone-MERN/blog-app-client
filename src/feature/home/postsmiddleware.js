@@ -1,7 +1,9 @@
 import axios from "axios";
 import Endpoints from "../../network/endpoints";
 import { toast } from "react-toastify";
-import { fetchedBlogs } from "./blogsslice";
+import { fetchedBlogs, updatePostCreationStatus } from "./blogsslice";
+import { ApiStatus } from "../../network/ApiStatus";
+import request, { RequestMethod } from "../../network/request";
 
 export const fetchPostsByGenreId = (genreId) => {
   return async function (dispatch) {
@@ -17,5 +19,19 @@ export const fetchPostsByGenreId = (genreId) => {
     } catch (error) {
       toast(error.message);
     }
+  };
+};
+
+export const createPost = (postInfo) => {
+  return async function (dispatch) {
+    dispatch(updatePostCreationStatus(ApiStatus.pending));
+    const { success } = await request({
+      url: Endpoints.createPost,
+      method: RequestMethod.POST,
+      data: postInfo,
+    });
+    if (success) {
+      dispatch(updatePostCreationStatus(ApiStatus.success));
+    } else dispatch(updatePostCreationStatus(ApiStatus.error));
   };
 };

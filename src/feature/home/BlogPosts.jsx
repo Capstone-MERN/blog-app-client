@@ -1,26 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles/blogs.scss";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-
-const getRelativeTime = (timestamp) => {
-  const createdDate = new Date(timestamp);
-  const currentDate = new Date();
-  const difference = (currentDate - createdDate) / 1000;
-  // 24 * 60 * 60 = 86400
-  const days = parseInt(difference / 86400);
-  if (days > 0) return `${days} ${days > 1 ? "days" : "day"} ago`;
-  const hrs = parseInt(difference / 3600);
-  if (hrs > 0) return `${hrs} ${hrs > 1 ? "hrs" : "hr"} ago`;
-  const minutes = parseInt(hrs / 60);
-  if (minutes > 0) return `${minutes} ${minutes > 1 ? "mins" : "min"} ago`;
-  const seconds = parseInt(minutes / 60);
-  return `${seconds} ${seconds > 1 ? "seconds" : "second"} ago`;
-};
+import { Modal } from "antd";
+import Comments from "../comments/Comments";
+import { getRelativeTime } from "../../utils/time";
+import AddComment from "../comments/AddComment";
+import CustomModal from "../../components/modal/CustomModal";
 
 export default function BlogPosts() {
   const { genreId } = useParams();
   const blogs = useSelector((state) => state.blogs[genreId]);
+
+  const [isCommentsModalOpen, setIsCommentsModalOpen] = useState(false);
+  const [selectedBlogId, setSelectedBlogId] = useState(null);
+
+  const openComments = (blogId) => {
+    setSelectedBlogId(blogId);
+    setIsCommentsModalOpen(true);
+  };
+
+  const closeCommentsModal = () => {
+    setIsCommentsModalOpen(false);
+    setSelectedBlogId(null);
+  };
 
   if (!blogs) {
     return <h1>Loading ...</h1>;
@@ -30,7 +33,7 @@ export default function BlogPosts() {
     <div className="blogs-list-container">
       {blogs.map((blog) => {
         return (
-          <div className="blog" key={blog.blogId}>
+          <div className="blog" key={blog.postId}>
             <div className="header">
               <span className="author">{blog.authorName}</span>
               <span className="genre">{blog.genre}</span>
@@ -40,11 +43,24 @@ export default function BlogPosts() {
               <p>{blog.description}</p>
             </div>
             <div className="footer">
-              <button className="comment-btn">Comments</button>
+              <button
+                className="comment-btn"
+                onClick={() => openComments(blog.postId)}
+              >
+                Comments
+              </button>
             </div>
           </div>
         );
       })}
+      {isCommentsModalOpen && (
+        <CustomModal onCancel={closeCommentsModal}>
+          <>
+            <Comments blogId={selectedBlogId} />
+            <AddComment blogId={selectedBlogId} />
+          </>
+        </CustomModal>
+      )}
     </div>
   );
 }
