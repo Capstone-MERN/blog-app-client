@@ -12,7 +12,6 @@ import { ApiStatus } from "./network/ApiStatus";
 const NotFound = () => {
   const defaultGenreId =
     useSelector((state) => state.genres.genres)?.[0]?.id ?? "movies";
-  console.log(defaultGenreId);
   return <Navigate to={`/${defaultGenreId}`} />;
 };
 

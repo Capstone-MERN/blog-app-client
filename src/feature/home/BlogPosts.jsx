@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./styles/blogs.scss";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Modal } from "antd";
 import Comments from "../comments/Comments";
 import { getRelativeTime } from "../../utils/time";
 import AddComment from "../comments/AddComment";
@@ -33,7 +32,10 @@ export default function BlogPosts() {
     <div className="blogs-list-container">
       {blogs.map((blog) => {
         return (
-          <div className="blog" key={blog.postId}>
+          <div
+            className={`blog ${blog.sentiment?.toLowerCase()}`}
+            key={blog.postId}
+          >
             <div className="header">
               <span className="author">{blog.authorName}</span>
               <span className="genre">{blog.genre}</span>
