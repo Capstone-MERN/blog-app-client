@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./styles/genres.scss";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPostsByGenreId } from "./postsmiddleware";
+import { fetchPostsByGenreId } from "./blogsMiddleware";
 
 export default function GenrePicker() {
   const { genreId } = useParams();

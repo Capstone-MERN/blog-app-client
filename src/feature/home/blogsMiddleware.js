@@ -8,16 +8,28 @@ import request, { RequestMethod } from "../../network/request";
 export const fetchPostsByGenreId = (genreId) => {
   return async function (dispatch) {
     try {
+      dispatch(fetchedBlogs({ apiStatus: ApiStatus.pending }));
       const { data } = await axios({
         url: Endpoints.posts,
+        params: { genre: genreId },
         headers: {
           Authorization: localStorage.getItem("token"),
         },
       });
-      dispatch(fetchedBlogs({ posts: data.data, genreId }));
-      toast(data.message);
+      dispatch(
+        fetchedBlogs({
+          posts: data.data,
+          genreId,
+          apiStatus: ApiStatus.success,
+        })
+      );
     } catch (error) {
       toast(error.message);
+      dispatch(
+        fetchedBlogs({
+          apiStatus: ApiStatus.error,
+        })
+      );
     }
   };
 };

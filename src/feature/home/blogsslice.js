@@ -7,14 +7,20 @@ const blogsSlice = createSlice({
     // [politics]: [post1, post2, post3]
     // [sports] : [post1, post2, post3]
     // generes: [],
+    read: {
+      apiStatus: ApiStatus.init,
+    },
     create: {
       apiStatus: ApiStatus.init,
     },
   },
   reducers: {
     fetchedBlogs: (state, { payload }) => {
-      const { genreId, posts } = payload;
-      state[genreId] = posts;
+      const { genreId, posts, apiStatus } = payload;
+      if (genreId && posts) {
+        state[genreId] = posts;
+      }
+      state.read.apiStatus = apiStatus;
     },
     updatePostCreationStatus: (state, { payload }) => {
       state.create = payload;

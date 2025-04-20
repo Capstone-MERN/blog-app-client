@@ -1,18 +1,29 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import "./styles/blogs.scss";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Comments from "../comments/Comments";
 import { getRelativeTime } from "../../utils/time";
 import AddComment from "../comments/AddComment";
 import CustomModal from "../../components/modal/CustomModal";
+import { Button, Empty, Skeleton } from "antd";
+import { ApiStatus } from "../../network/ApiStatus";
+import { fetchPostsByGenreId } from "./blogsMiddleware";
+
+const skeletonLength = [1, 2];
 
 export default function BlogPosts() {
   const { genreId } = useParams();
+  const dispatch = useDispatch();
+  const { apiStatus } = useSelector((state) => state.blogs.read);
   const blogs = useSelector((state) => state.blogs[genreId]);
 
   const [isCommentsModalOpen, setIsCommentsModalOpen] = useState(false);
   const [selectedBlogId, setSelectedBlogId] = useState(null);
+
+  const retryFetchingPosts = () => {
+    dispatch(fetchPostsByGenreId(genreId));
+  };
 
   const openComments = (blogId) => {
     setSelectedBlogId(blogId);
@@ -24,8 +35,50 @@ export default function BlogPosts() {
     setSelectedBlogId(null);
   };
 
-  if (!blogs) {
-    return <h1>Loading ...</h1>;
+  if (apiStatus === ApiStatus.init || apiStatus === ApiStatus.pending) {
+    return (
+      <div className="blogs-list-container skeleton-loader">
+        {skeletonLength.map((_, index) => {
+          return (
+            <Fragment key={index.toString()}>
+              <div className="header">
+                <Skeleton
+                  title={false}
+                  paragraph={false}
+                  active
+                  avatar={{ shape: "circle" }}
+                  loading
+                />
+              </div>
+              <div className="body">
+                <Skeleton paragraph={false} title={{ width: "100px" }} />
+                <Skeleton />
+              </div>
+              <div className="footer">
+                <Skeleton paragraph={false} title={{ width: "50px" }} />
+              </div>
+            </Fragment>
+          );
+        })}
+      </div>
+    );
+  }
+
+  if (apiStatus === ApiStatus.error) {
+    return (
+      <div className="blogs-list-container error-container">
+        <p>Something went wrong !!!</p>
+        <Button className="btn" type="default" onClick={retryFetchingPosts}>
+          Retry
+        </Button>
+      </div>
+    );
+  }
+
+  if (!blogs?.length) {
+    return (
+      <Empty description="No blogs found for the selected topic ! please try changing the topic" />
+    );
   }
 
   return (

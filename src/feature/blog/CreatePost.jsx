@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Input, Modal, Select } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost } from "../home/postsmiddleware";
+import { createPost } from "../home/blogsMiddleware";
 import { ApiStatus } from "../../network/ApiStatus";
 import { updatePostCreationStatus } from "../home/blogsslice";
 
@@ -28,7 +28,12 @@ export default function CreatePost() {
 
   return (
     <>
-      <button onClick={toggleModal}>Create Post</button>
+      <Button
+        onClick={toggleModal}
+        icon={<span className="material-icons">add</span>}
+      >
+        Create Post
+      </Button>
       <Modal footer={null} open={isModalOpen} closable onCancel={toggleModal}>
         <Form layout="vertical" onFinish={onSubmitForm}>
           <Form.Item

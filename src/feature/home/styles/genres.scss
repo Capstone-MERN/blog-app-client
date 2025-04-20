@@ -11,8 +11,13 @@
     border: none;
     color: gray;
     text-decoration: none;
+    font-size: 0.8rem;
+    border: 0.4px solid #e3e3e3;
+    padding: 4px 6px;
+    border-radius: 20px;
   }
   .active-genre {
-    color: #000;
+    color: #fff;
+    background-color: #57c4dc;
   }
 }
