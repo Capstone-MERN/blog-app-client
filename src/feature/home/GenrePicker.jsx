@@ -19,7 +19,7 @@ export default function GenrePicker() {
         return (
           <Link
             to={{
-              pathname: `/${genre.id}`,
+              pathname: `/genres/${genre.id}`,
             }}
             className={`link ${genreId === genre.id && "active-genre"}`}
             key={genre.id}

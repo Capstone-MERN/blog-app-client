@@ -8,11 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { isUserLoggedInSelector } from "./feature/auth/authselectors";
 import { fetchAllGenres } from "./genres/genresMiddleware";
 import { ApiStatus } from "./network/ApiStatus";
+import { Spin } from "antd";
 
 const NotFound = () => {
+  console.log("not found");
   const defaultGenreId =
     useSelector((state) => state.genres.genres)?.[0]?.id ?? "movies";
-  return <Navigate to={`/${defaultGenreId}`} />;
+  return <Navigate to={`/genres/${defaultGenreId}`} />;
 };
 
 const PrivateRoutes = () => {
@@ -29,14 +31,14 @@ const PrivateRoutes = () => {
     genresFetchingApiStatus === ApiStatus.init ||
     genresFetchingApiStatus === ApiStatus.pending
   ) {
-    return <h1>Application data is loading ...</h1>;
+    return <Spin />;
   }
 
   if (genresFetchingApiStatus === ApiStatus.success) {
     return (
       <BrowserRouter>
         <Routes>
-          <Route path="/:genreId" Component={Home} />
+          <Route path="genres/:genreId" Component={Home} />
           <Route path="*" Component={NotFound} />
         </Routes>
       </BrowserRouter>
